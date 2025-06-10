@@ -5,43 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  final pedidosHome = [
-    PedidoItem(
-      nroOrden: '0012',
-      cliente: 'José Pérez',
-      paraLlevar: false,
-      producto: 'Hamburguesa Clásica',
-      cantidad: 2,
-      ingredientes: ['Sin cebolla', 'Extra queso'],
-      acompanamientos: ['Papas fritas', 'Gaseosa'],
-      observacion: 'Sin sal',
-      colorEstado: Colors.red,
-    ),
-    PedidoItem(
-      nroOrden: '0013',
-      cliente: 'María López',
-      paraLlevar: true,
-      producto: 'Pizza Personal',
-      cantidad: 1,
-      ingredientes: ['Sin orégano', 'Extra aceitunas'],
-      acompanamientos: ['Inka Cola'],
-      observacion: '',
-      colorEstado: Colors.red,
-    ),
-    PedidoItem(
-      nroOrden: '0014',
-      cliente: 'Luis Ramos',
-      paraLlevar: false,
-      producto: 'Pollo Broaster',
-      cantidad: 3,
-      ingredientes: ['Con mayonesa'],
-      acompanamientos: ['Ensalada', 'Arroz'],
-      observacion: 'Bien crocante',
-      colorEstado: Colors.red,
-    ),
-  ];
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

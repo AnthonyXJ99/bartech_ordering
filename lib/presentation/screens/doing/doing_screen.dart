@@ -5,32 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoingScreen extends StatelessWidget {
-  DoingScreen({super.key});
-
-  final pedidosDoing = [
-    PedidoItem(
-      nroOrden: '0012',
-      cliente: 'José Pérez',
-      paraLlevar: false,
-      producto: 'Hamburguesa Clásica',
-      cantidad: 2,
-      ingredientes: ['Sin cebolla', 'Extra queso'],
-      acompanamientos: ['Papas fritas', 'Gaseosa'],
-      observacion: 'Sin sal',
-      colorEstado: Colors.amber,
-    ),
-    PedidoItem(
-      nroOrden: '0014',
-      cliente: 'Luis Ramos',
-      paraLlevar: false,
-      producto: 'Pollo Broaster',
-      cantidad: 3,
-      ingredientes: ['Con mayonesa'],
-      acompanamientos: ['Ensalada', 'Arroz'],
-      observacion: 'Bien crocante',
-      colorEstado: Colors.amber,
-    ),
-  ];
+  const DoingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

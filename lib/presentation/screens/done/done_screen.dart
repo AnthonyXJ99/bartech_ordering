@@ -11,7 +11,7 @@ class DoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pedidos Listos"),
+        title: const Text("Listo para entregar"),
         centerTitle: true,
         backgroundColor: Colors.green,
       ),
@@ -36,16 +36,6 @@ class DoneScreen extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 12, top: 12, bottom: 8),
-                    child: Text(
-                      "Listos para entregar",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
                   Expanded(
                     child: pedidos.isEmpty
                         ? Center(

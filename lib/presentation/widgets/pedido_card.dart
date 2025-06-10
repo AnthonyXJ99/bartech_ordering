@@ -1,5 +1,7 @@
 import 'package:bartech_ordering/models/pedido.dart';
+import 'package:bartech_ordering/presentation/widgets/tiempo_transcurrido.dart';
 import 'package:flutter/material.dart';
+// Asegúrate de importar TiempoTranscurridoWidget
 
 class PedidoCard extends StatelessWidget {
   final PedidoItem pedido;
@@ -19,9 +21,12 @@ class PedidoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool urgente =
+        pedido.tiempoTranscurrido.inMinutes >= 15; // Puedes ajustar
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      elevation: 6,
+      elevation: urgente ? 10 : 6,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       child: Container(
         decoration: BoxDecoration(
@@ -31,86 +36,136 @@ class PedidoCard extends StatelessWidget {
             right: BorderSide(color: pedido.colorEstado, width: 1),
             bottom: BorderSide(color: pedido.colorEstado, width: 1),
           ),
+          color: urgente ? Colors.red.shade50 : null,
           borderRadius: const BorderRadius.all(Radius.circular(18)),
         ),
         padding: const EdgeInsets.fromLTRB(18, 14, 12, 18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Fila de info principal y botón
+            // Header: N° orden, cliente, para llevar/local, botón
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'N° ${pedido.nroOrden}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: pedido.colorEstado,
-                    fontSize: 15,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: pedido.colorEstado.withAlpha(38),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: pedido.colorEstado, width: 1.5),
+                  ),
+                  child: Text(
+                    'N° ${pedido.nroOrden}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: pedido.colorEstado,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
+
+                const SizedBox(width: 12),
                 Expanded(
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.person, size: 17, color: Colors.black54),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: Text(
-                          pedido.cliente,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
+                      Row(
+                        children: [
+                          Icon(Icons.person, size: 17, color: Colors.black54),
+                          const SizedBox(width: 2),
+                          Expanded(
+                            child: Text(
+                              pedido.cliente,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 6),
-                      Chip(
-                        label: Text(
-                          pedido.paraLlevar ? "Para llevar" : "En local",
-                          style: TextStyle(
+                      Row(
+                        children: [
+                          Icon(
+                            pedido.paraLlevar
+                                ? Icons.shopping_bag
+                                : Icons.restaurant,
+                            size: 15,
                             color: pedido.paraLlevar
-                                ? Colors.orange.shade900
-                                : Colors.green.shade800,
-                            fontWeight: FontWeight.bold,
+                                ? Colors.orange
+                                : Colors.green,
                           ),
-                        ),
-                        backgroundColor: pedido.paraLlevar
-                            ? Colors.orange.shade100
-                            : Colors.green.shade100,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        visualDensity: VisualDensity.compact,
-                        side: BorderSide.none,
+                          const SizedBox(width: 3),
+                          Text(
+                            pedido.paraLlevar ? "Para llevar" : "En local",
+                            style: TextStyle(
+                              color: pedido.paraLlevar
+                                  ? Colors.orange.shade800
+                                  : Colors.green.shade700,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.5,
+                            ),
+                          ),
+                          if (urgente) ...[
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red.shade300,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Text(
+                                "URGENTE",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                     ],
                   ),
                 ),
                 if (onMarcarListo != null)
-                  ElevatedButton.icon(
-                    onPressed: onMarcarListo,
-                    icon: Icon(actionIcon, color: Colors.white, size: 20),
-                    label: Text(
-                      actionLabel,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: actionColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6),
+                    child: ElevatedButton.icon(
+                      onPressed: onMarcarListo,
+                      icon: Icon(actionIcon, color: Colors.white, size: 20),
+                      label: Text(
+                        actionLabel,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: actionColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        elevation: 0,
+                        textStyle: const TextStyle(fontSize: 13),
                       ),
-                      elevation: 0,
-                      textStyle: const TextStyle(fontSize: 13),
                     ),
                   ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
+            // Producto y cantidad
             Row(
               children: [
                 Icon(Icons.fastfood, color: pedido.colorEstado, size: 20),
@@ -125,7 +180,28 @@ class PedidoCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
+            // Fechas y tiempo transcurrido
+            Row(
+              children: [
+                Icon(Icons.access_time, size: 17, color: Colors.grey.shade600),
+                const SizedBox(width: 4),
+                Text(
+                  "Ingresó: ${pedido.fechaHoraIngresoString}",
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                TiempoTranscurridoWidget(
+                  fechaIngreso: pedido.fechaHoraIngreso,
+                  urgente: urgente,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
             // Ingredientes
             if (pedido.ingredientes.isNotEmpty) ...[
               Wrap(

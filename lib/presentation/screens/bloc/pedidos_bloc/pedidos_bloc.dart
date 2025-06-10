@@ -29,6 +29,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Gaseosa 1L', 'Papas'],
         observacion: 'Por favor, cortar en 8 partes',
         colorEstado: Colors.red, // NUEVO
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 5),
+        ), // 5 min atrás
       ),
       PedidoItem(
         nroOrden: '0011',
@@ -40,6 +43,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Chicha morada'],
         observacion: '',
         colorEstado: Colors.red, // NUEVO
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 2),
+        ), // 2 min atrás
       ),
       // --- En preparación ---
       PedidoItem(
@@ -52,6 +58,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Papas fritas', 'Gaseosa pequeña'],
         observacion: 'Sin ketchup',
         colorEstado: Colors.amber, // EN PREPARACIÓN
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 14),
+        ), // 14 min atrás
       ),
       PedidoItem(
         nroOrden: '0013',
@@ -63,6 +72,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Arroz', 'Inka Cola'],
         observacion: '',
         colorEstado: Colors.amber, // EN PREPARACIÓN
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 20),
+        ), // 20 min atrás
       ),
       // --- Listos ---
       PedidoItem(
@@ -75,6 +87,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Gaseosa'],
         observacion: 'Para mesa 8',
         colorEstado: Colors.green, // LISTO
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 35),
+        ), // 35 min atrás
       ),
       PedidoItem(
         nroOrden: '0015',
@@ -86,6 +101,9 @@ class PedidosBloc extends Bloc<PedidosEvent, PedidosState> {
         acompanamientos: ['Papas', 'Gaseosa'],
         observacion: 'Sin picante',
         colorEstado: Colors.green, // LISTO
+        fechaHoraIngreso: DateTime.now().subtract(
+          const Duration(minutes: 40, seconds: 50),
+        ), // 40 min, 50 s atrás
       ),
     ];
 
